@@ -1,20 +1,26 @@
-import type { Config } from "tailwindcss";
-
-const config: Config = {
+module.exports = {
   content: [
-    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
     extend: {
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+      fontFamily: {
+        serif: ['"Be Vietnam Pro"','Georgia', 'Cambria', 'Times New Roman', 'serif'],
+      },
+      animation: {
+        typing: 'typing 5s infinite alternate, cursor 2s step-end infinite',
+      },
+      keyframes: {
+        typing: {
+          '0%': { width: '0%' },
+          '50%': { width: '100%' },
+          // '100%': { width: '0%' },
+        },
+        cursor: {
+          '50%': { borderColor: 'transparent' },
+        },
       },
     },
   },
   plugins: [],
 };
-export default config;

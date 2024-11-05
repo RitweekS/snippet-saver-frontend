@@ -2,7 +2,7 @@ import React from 'react'
 
 const Border = () => {
   return (
-    <div className='border border-gray-400'/>
+    <div className='h-[1px] bg-gray-700'/>
   )
 }
 
