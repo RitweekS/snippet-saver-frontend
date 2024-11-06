@@ -8,7 +8,7 @@ const RootLayout = ({children}:{children:React.ReactNode}) => {
     <div className='bg-black h-screen font-serif text-gray-100 flex flex-col'>
       <AppBar/>
       <Border/>
-      <div className='flex-1'>
+      <div className='flex-1 bg-black'>
         {children}
       </div>
     </div>

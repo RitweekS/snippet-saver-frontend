@@ -1,4 +1,8 @@
+import Image from 'next/image'
 import React from 'react'
+import { MdMoreHoriz } from "react-icons/md";
+import DropdownMenu from '../DropdownMenu';
+
 
 interface ListItemProps {
     title : string
@@ -7,16 +11,16 @@ interface ListItemProps {
 }
 const ListItem = ({code,language,title}:ListItemProps) => {
   return (
-    <div className='flex justify-between rounded-[4px] border border-gray-700 p-4'>
-        <div className='flex gap-4'>
-            <div>i</div>
-                <div className='flex flex-col gap-1'>
-                    <p>{title}</p>
-                    <p>{language}</p>
-                    <p>{code}</p>
-                </div>
+    <div className='flex justify-between items-start rounded-[4px] border border-gray-700 p-4'>
+        <div className='flex gap-4 items-start'>
+            <Image src={"/snippet-list-item.svg"} alt='snippet' width={48} height={48}/>
+            <div className='flex flex-col gap-1 items-start'>
+                <p className='text-base font-medium'>{title}</p>
+                <p className='text-[14px] text-gray-400 font-normal'>{language}</p>
+                <p className='text-[14px] text-gray-400 font-normal'>{code}</p>
             </div>
-        <div>menu</div>
+        </div>
+        <DropdownMenu/>
     </div>
   )
 }

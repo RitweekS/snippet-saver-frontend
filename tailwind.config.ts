@@ -5,7 +5,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        serif: ['"Be Vietnam Pro"','Georgia', 'Cambria', 'Times New Roman', 'serif'],
+        serif: ['Calibri','Georgia', 'Cambria', 'Times New Roman', 'serif'],
       },
       animation: {
         typing: 'typing 5s infinite alternate, cursor 2s step-end infinite',

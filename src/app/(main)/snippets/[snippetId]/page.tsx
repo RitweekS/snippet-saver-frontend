@@ -1,8 +1,9 @@
+import Snippet from '@/components/snippets/snippet'
 import React from 'react'
 
 const page = () => {
   return (
-    <div>snippet with id </div>
+    <Snippet/>
   )
 }
 
