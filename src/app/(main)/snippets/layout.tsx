@@ -1,4 +1,3 @@
-import Border from '@/components/border'
 import React from 'react'
 
 const SnippetLayout = ({children}:{children:React.ReactNode}) => {

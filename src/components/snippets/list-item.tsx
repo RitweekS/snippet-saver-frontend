@@ -17,7 +17,7 @@ const ListItem = ({code,language,title}:ListItemProps) => {
             <div className='flex flex-col gap-1 items-start'>
                 <p className='text-base font-medium'>{title}</p>
                 <p className='text-[14px] text-gray-400 font-normal'>{language}</p>
-                <p className='text-[14px] text-gray-400 font-normal'>{code}</p>
+                <pre className='text-[14px] text-gray-400 font-normal'>{code.split('\n')[0]}</pre>
             </div>
         </div>
         <DropdownMenu/>

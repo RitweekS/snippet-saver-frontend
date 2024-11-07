@@ -7,6 +7,9 @@ import Model from '../model'
 import Button from '../button'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import Editor from "@monaco-editor/react";
+import { QueryClient, useMutation, useQuery } from '@tanstack/react-query'
+import axios from 'axios'
+import { Response } from '@/utils/common-type'
 
 type FormValues = {
   title: string;
@@ -16,13 +19,48 @@ type FormValues = {
   tags?: string;
 };
 
+interface Snippet{
+    id: 3,
+    tags: string[],
+    title: string,
+    note: string,
+    snippet: string,
+    language: string
+}
+
 const Snippets = () => {
   const [addSnippetModel,setAddSnippetModel] = useState(false)
   const { control,register, handleSubmit,getValues ,formState: { errors } } = useForm<FormValues>();
-
-  const onSubmit: SubmitHandler<FormValues> = (data) => {
-    console.log(data);
+  const queryClient = new QueryClient()
+  const addSnippetMutation = useMutation({
+    mutationFn:async (data:Omit<Snippet,"id">)=>{
+        await axios.post<Response<string>>("http://localhost:8080/v1/snippets/1",data)
+    },
+    onSuccess:()=>{
+      queryClient.invalidateQueries({
+        queryKey: ['getSnippets'],
+      })
+    }
+  }); 
+  const onSubmit: SubmitHandler<FormValues> = async (data) => {
+    const dataToSend:Omit<Snippet,"id"> = {
+      language:data.language,
+      note:data.notes ?? "",
+      snippet:data.snippet,
+      tags:[data.tags!],
+      title:data.title,
+    }
+    await addSnippetMutation.mutateAsync(dataToSend)
   };
+
+  const getSnippetsQuery = useQuery({
+    queryKey:["getSnippets"],
+    queryFn: async ()=>{
+      const response = await axios.get<Response<Snippet[]>>("http://localhost:8080/v1/snippets/1")
+      return response.data
+    }
+  })
+
 
   return (
     <div className='flex flex-col gap-8 py-6'>
@@ -37,12 +75,12 @@ const Snippets = () => {
           setOpen={setAddSnippetModel} 
           footer={
             <div className='flex justify-end items-center p-[16px]'>
-              <Button>Add</Button>
+              <Button onClick={handleSubmit(onSubmit)}>Add</Button>
             </div>} 
           title='Add New Snippet'
         >
           <div className='p-4 overflow-auto'>
-              <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+              <form  className="space-y-6">
               <div>
                 <label className="block text-sm font-medium mb-2">Title</label>
                 <input
@@ -112,7 +150,12 @@ const Snippets = () => {
         </Model>
         <div className='flex flex-col gap-5'>
             <SearchBox/>
-            <ListItem code='<p>test</p>' language='html' title='Fist Code'/>
+            {
+              getSnippetsQuery.data?.response_data && getSnippetsQuery.data?.response_data.map((snippet)=>{
+                return <ListItem code={snippet.snippet} language={snippet.language} title={snippet.title} key={snippet.id}/>
+
+              })
+            }
         </div>
     </div>
   )
