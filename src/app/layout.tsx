@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import AuthSessionProvider from "@/providers/session-provider";
 import RootLayout from "@/components/layout/root-layout";
+import { GlobalStateProvider } from "@/providers/global-state-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,9 +21,11 @@ export default function Layout({
     <html lang="en">
       <body className={inter.className}>
         <AuthSessionProvider>
-          <RootLayout>
-            {children}
-          </RootLayout>
+          <GlobalStateProvider>
+            <RootLayout>
+              {children}
+            </RootLayout>
+          </GlobalStateProvider>
         </AuthSessionProvider>
       </body>
     </html>

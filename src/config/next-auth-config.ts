@@ -1,6 +1,7 @@
 import axios from "axios";
 import { AuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
+import jwt from "jsonwebtoken";
 
 
 export const NextAuthConfig : AuthOptions = {
@@ -22,18 +23,28 @@ export const NextAuthConfig : AuthOptions = {
 
             return true
         },
-        jwt({token,user}){
+        
+        jwt({token,user,account,session}){
+            if (account) {
+                token.accessToken = account.access_token
+            }
+
             if(user?.id){
                 token.id = user.id
             }
             return token
         },
         async session({ session, token }:any) {
+            session.accessToken = token.accessToken
+            
             if (token?.id && session.user) {
                 session.user.id = token.id
             }
             return session;
         }
     },
-    secret:process.env.JWT_SECRET
+    secret:process.env.JWT_SECRET,
+    session: {
+        strategy: "jwt",
+      },
 }

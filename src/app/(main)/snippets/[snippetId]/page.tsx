@@ -1,9 +1,10 @@
 import Snippet from '@/components/snippets/snippet'
 import React from 'react'
 
-const page = () => {
+const page = ({params}:{params:{snippetId:number}}) => {
+
   return (
-    <Snippet/>
+    <Snippet snippetId={params.snippetId}/>
   )
 }
 

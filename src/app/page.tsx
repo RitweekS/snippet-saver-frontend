@@ -2,8 +2,6 @@
 import Landing from "@/components/landing";
 import { useSession } from "next-auth/react";
 export default function Home() {
-  const session = useSession()
-
   return (
    <>
       <Landing/>
