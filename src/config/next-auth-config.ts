@@ -4,6 +4,13 @@ import GoogleProvider from "next-auth/providers/google";
 import jwt from "jsonwebtoken";
 
 
+const SignToken =  (email:any)=> {
+const token =  jwt.sign({id:email},process.env.JWT_SECRET!);
+    return token
+}
+
+
+
 export const NextAuthConfig : AuthOptions = {
     providers:[
     GoogleProvider({
@@ -12,7 +19,7 @@ export const NextAuthConfig : AuthOptions = {
     })],
     callbacks: {
         async signIn({ user }) {
-            const response = await axios.post("http://localhost:8080/v1/auth/signin",{
+            const response = await axios.post(`${process.env.BASE_URL}auth/signin`,{
                 name:user.name,
                 email:user.email,
                 image:user.image
@@ -28,6 +35,10 @@ export const NextAuthConfig : AuthOptions = {
             if (account) {
                 token.accessToken = account.access_token
             }
+            if (account) {
+                const userToken =  SignToken(user?.id as string);
+                token.userToken = userToken;
+            }
 
             if(user?.id){
                 token.id = user.id
@@ -36,7 +47,7 @@ export const NextAuthConfig : AuthOptions = {
         },
         async session({ session, token }:any) {
             session.accessToken = token.accessToken
-            
+            session.loggedUser = token.userToken;
             if (token?.id && session.user) {
                 session.user.id = token.id
             }
@@ -46,5 +57,5 @@ export const NextAuthConfig : AuthOptions = {
     secret:process.env.JWT_SECRET,
     session: {
         strategy: "jwt",
-      },
+    },
 }

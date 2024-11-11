@@ -38,7 +38,7 @@ const Snippet = ({snippetId}:SnippetProps) => {
     const getSnippetByIdQuery = useQuery({
         queryKey:["getSnippetByID"],
         queryFn: async ()=>{
-          const response = await AxiosInstance.get<Response<Snippet>>(`snippets/${userId}/${snippetId}`)
+          const response = await AxiosInstance.get<Response<Snippet>>(`snippets/${snippetId}`)
           return response.data
         },
         enabled:!!userId && !!snippetId
@@ -73,7 +73,7 @@ const Snippet = ({snippetId}:SnippetProps) => {
     const deleteSnippetByIDmutation = useMutation({
         mutationKey:["deleteSnippetByID"],
         mutationFn: async ()=>{
-          const response = await AxiosInstance.delete<Response<Snippet>>(`snippets/${userId}/${snippetId}`)
+          const response = await AxiosInstance.delete<Response<Snippet>>(`snippets/${snippetId}`)
           return response.data
         },
         onSuccess:({response_code})=>{
@@ -86,7 +86,7 @@ const Snippet = ({snippetId}:SnippetProps) => {
     const updateSnippetByIDmutation = useMutation({
         mutationKey:["updateSnippetByID"],
         mutationFn: async (data:Omit<Snippet,"id">)=>{
-          const response = await AxiosInstance.put<Response<Snippet>>(`snippets/${userId}/${snippetId}`,data)
+          const response = await AxiosInstance.put<Response<Snippet>>(`snippets/${snippetId}`,data)
           return response.data
         },
         onSuccess:({response_code})=>{

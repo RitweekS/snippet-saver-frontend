@@ -31,13 +31,11 @@ interface CreateSnippetFormProps{
 }
 const CreateSnippetForm = ({addSnippetModel,setAddSnippetModel,getSnippetsQuery}:CreateSnippetFormProps) => {
     const { control,register, handleSubmit,formState: { errors },reset,resetField } = useForm<FormValues>();
-    const {userId} = useGlobalStore()
-
     const addSnippetMutation = useMutation({
         mutationFn: async (data: Omit<Snippet, "id">) => {
           try {
             const response = await AxiosInstance.post<Response<string>>(
-              `snippets/${userId}`,
+              `snippets`,
               data,
               { withCredentials: true }
             );

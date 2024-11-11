@@ -29,7 +29,7 @@ const Snippets = () => {
   const getSnippetsQuery = useQuery({
     queryKey:["getSnippets"],
     queryFn: async ()=>{
-      const response = await AxiosInstance.get<Response<Snippet[]>>(`snippets/${userId}`)
+      const response = await AxiosInstance.get<Response<Snippet[]>>("snippets")
       return response.data
     },
     enabled:!!userId
