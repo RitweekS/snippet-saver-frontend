@@ -4,7 +4,7 @@ import { getSession } from "next-auth/react";
 
 
 const AxiosInstance =  axios.create({
-    baseURL: 'https://snippet-saver-backend-production.up.railway.app/v1',
+    baseURL: 'https://snippet-saver-backend-production.up.railway.app/v1/',
     withCredentials: true,
 })
 

@@ -8,7 +8,7 @@ export async function middleware(request: NextRequest) {
 
     const session = await getToken({
         req: request,
-        secret: process.env.JWT_SECRET,
+        secret: process.env.NEXTAUTH_SECRET,
     });
 
     if (!session && !isSignInPage) {

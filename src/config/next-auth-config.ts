@@ -9,6 +9,8 @@ const token =  jwt.sign({id:email},process.env.JWT_SECRET!);
     return token
 }
 
+
+
 export const NextAuthConfig : AuthOptions = {
     providers:[
     GoogleProvider({
@@ -17,7 +19,7 @@ export const NextAuthConfig : AuthOptions = {
     })],
     callbacks: {
         async signIn({ user }) {
-            const response = await axios.post("https://snippet-saver-frontend-production.up.railway.app/auth/signin",{
+            const response = await axios.post("https://snippet-saver-backend-production.up.railway.app/v1/auth/signin",{
                 name:user.name,
                 email:user.email,
                 image:user.image
